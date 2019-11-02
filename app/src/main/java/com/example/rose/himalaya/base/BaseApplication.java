@@ -1,4 +1,4 @@
-package com.example.rose.himalaya;
+package com.example.rose.himalaya.base;
 
 import android.app.Application;
 import android.app.PendingIntent;
@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import com.example.rose.himalaya.utils.LogUtil;
 import com.ximalaya.ting.android.opensdk.auth.constants.XmlyConstants;
 import com.ximalaya.ting.android.opensdk.constants.ConstantsOpenSdk;
 import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
@@ -37,7 +38,7 @@ import okhttp3.Response;
 /**
  * Created by le.xin on 2016/6/12.
  */
-public class TingApplication extends Application {
+public class BaseApplication extends Application {
     public static final String REFRESH_TOKEN_URL = "https://api.ximalaya.com/oauth2/refresh_token?";
 
     @Override
@@ -55,5 +56,8 @@ public class TingApplication extends Application {
             mXimalaya.setPackid("com.ximalaya.qunfeng");
             mXimalaya.init(this ,mAppSecret);
         }
+
+        //初始化LogUtil
+        LogUtil.init(this.getPackageName(),true);
     }
 }
