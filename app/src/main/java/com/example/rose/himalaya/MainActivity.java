@@ -32,6 +32,7 @@ public class MainActivity extends FragmentActivity {
     private static final String TAG = "MainActivity";
     private MagicIndicator magicIndicator;
     private ViewPager contentViewPager;
+    private IndicatorAdapter indicatorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,20 @@ public class MainActivity extends FragmentActivity {
 
         initImmersionBar();//初始化沉浸式状态栏
         initView();//初始化顶部指示器
+        initEvent();
+    }
+
+    private void initEvent() {
+        //
+        indicatorAdapter.setOnIndicatorTabClickListener(new IndicatorAdapter.OnIndicatorTabClickListener() {
+            @Override
+            public void onTabClick(int index) {
+                LogUtil.d(TAG,"IndicatorClick index is ---->" + index);
+                if (contentViewPager != null){
+                    contentViewPager.setCurrentItem(index);
+                }
+            }
+        });
     }
 
     private void initImmersionBar() {
@@ -62,7 +77,7 @@ public class MainActivity extends FragmentActivity {
         contentViewPager.setAdapter(contentViewPagerAdapter);
 
 //        创建indicator适配器
-        IndicatorAdapter indicatorAdapter = new IndicatorAdapter(this);
+        indicatorAdapter = new IndicatorAdapter(this);
         CommonNavigator commonNavigator = new CommonNavigator(this);
         commonNavigator.setAdapter(indicatorAdapter);
 

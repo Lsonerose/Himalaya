@@ -20,6 +20,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.Simple
 public class IndicatorAdapter extends CommonNavigatorAdapter {
 
     private final String[] titles;
+    private OnIndicatorTabClickListener mOnTabClickListener;
 
     public IndicatorAdapter(Context context) {
         titles = context.getResources().getStringArray(R.array.indicator_name);
@@ -33,7 +34,7 @@ public class IndicatorAdapter extends CommonNavigatorAdapter {
     }
 
     @Override
-    public IPagerTitleView getTitleView(Context context, int index) {
+    public IPagerTitleView getTitleView(Context context, final int index) {
 //        创建View
         ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
 //        设置一般情况下为灰色
@@ -48,7 +49,10 @@ public class IndicatorAdapter extends CommonNavigatorAdapter {
         colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                TODO:
+//              如果titleTab的点击事件不为null 的话，就把index传到接口里面 提供给外部使用
+                if (mOnTabClickListener != null){
+                    mOnTabClickListener.onTabClick(index);
+                }
             }
         });
 //        把创建好的view返回出去
@@ -63,4 +67,13 @@ public class IndicatorAdapter extends CommonNavigatorAdapter {
 
         return indicator;
     }
+
+    public void setOnIndicatorTabClickListener(OnIndicatorTabClickListener indicatorTabClickListenerlistener){
+        this.mOnTabClickListener = indicatorTabClickListenerlistener;
+    }
+
+//    暴露一个选项卡点击接口给外面调用 来相应头部titleTab的点击事件
+    public interface OnIndicatorTabClickListener{
+        void onTabClick(int index);
+}
 }
