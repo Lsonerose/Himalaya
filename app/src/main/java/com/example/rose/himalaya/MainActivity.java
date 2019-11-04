@@ -79,6 +79,7 @@ public class MainActivity extends FragmentActivity {
 //        创建indicator适配器
         indicatorAdapter = new IndicatorAdapter(this);
         CommonNavigator commonNavigator = new CommonNavigator(this);
+        commonNavigator.setAdjustMode(true);//自动调节title选项卡的内容位置
         commonNavigator.setAdapter(indicatorAdapter);
 
         magicIndicator.setNavigator(commonNavigator);
