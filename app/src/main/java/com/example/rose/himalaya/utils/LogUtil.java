@@ -4,6 +4,7 @@ import android.util.Log;
 
 /**
  * Created by rose on 2019/10/31.
+ * 封装Log类 方便控制打印内容
  */
 
 public class LogUtil {

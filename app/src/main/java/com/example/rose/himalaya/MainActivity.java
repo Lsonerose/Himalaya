@@ -1,12 +1,14 @@
 package com.example.rose.himalaya;
 
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.example.rose.himalaya.adapters.IndicatorAdapter;
+import com.example.rose.himalaya.adapters.MainViewPagerAdapter;
 import com.example.rose.himalaya.utils.LogUtil;
 import com.gyf.immersionbar.ImmersionBar;
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
@@ -22,7 +24,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+/*
+**  程序主入口、主界面
+ */
+public class MainActivity extends FragmentActivity {
 
     private static final String TAG = "MainActivity";
     private MagicIndicator magicIndicator;
@@ -47,8 +52,14 @@ public class MainActivity extends AppCompatActivity {
         //指示器
         magicIndicator = findViewById(R.id.main_indicator);
         magicIndicator.setBackgroundColor(this.getResources().getColor(R.color.mainColor));
-        //VIEWPAGER
+        /*
+        ** Viewpager
+        ** 创建内容适配器
+        ** 绑定给viewpager
+         */
         contentViewPager = findViewById(R.id.main_content_pager);
+        MainViewPagerAdapter contentViewPagerAdapter = new MainViewPagerAdapter(getSupportFragmentManager());
+        contentViewPager.setAdapter(contentViewPagerAdapter);
 
 //        创建indicator适配器
         IndicatorAdapter indicatorAdapter = new IndicatorAdapter(this);
