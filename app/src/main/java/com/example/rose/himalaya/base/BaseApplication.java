@@ -57,7 +57,12 @@ public class BaseApplication extends Application {
             mXimalaya.init(this ,mAppSecret);
         }
 
-        //初始化LogUtil
-        LogUtil.init(this.getPackageName(),true);
+        /**
+         * 初始化LogUtil
+         * hilsRelease 为true时  禁止打印LOG
+         *             为false时 允许打印LOG
+         */
+
+        LogUtil.init(this.getPackageName(),false);
     }
 }

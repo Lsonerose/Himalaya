@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="recommend_recycleview_item_image_width">75dp</dimen>
+    <dimen name="recommend_recycleview_item_image_height">73dp</dimen>
+    <dimen name="recommend_recycleview_itme_content_margin_left">10dp</dimen>
+
+    <dimen name="recommend_recycleview_itme_content_tv_title_size">18sp</dimen>
+
+    <dimen name="recommend_recycleview_itme_content_tv_zi_title_width">262dp</dimen>
+    <dimen name="recommend_recycleview_itme_content_tv_zi_title_height">15dp</dimen>
+    <dimen name="recommend_recycleview_itme_content_tv_zi_title_size">12sp</dimen>
+    <dimen name="recommend_recycleview_itme_content_tv_zi_title_margin_top">5dp</dimen>
+
+
+
+
+</resources>
