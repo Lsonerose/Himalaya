@@ -8,5 +8,5 @@ package com.example.rose.himalaya.utils;
 public class Constant {
 
     //获取推荐列表专辑的数量
-    public static int RECOMMEND_COUNT = 20;
+    public static int RECOMMEND_COUNT = 50;
 }

@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.example.rose.himalaya.R;
 import com.example.rose.himalaya.adapters.RecommendRecycleViewAdapter;
 import com.example.rose.himalaya.base.BaseFragment;
+import com.example.rose.himalaya.interfaces.IRecommendViewCallback;
+import com.example.rose.himalaya.presenters.RecommendPresenter;
 import com.example.rose.himalaya.utils.Constant;
 import com.example.rose.himalaya.utils.LogUtil;
 import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
@@ -29,11 +31,12 @@ import java.util.Map;
  * 推荐界面
  */
 
-public class RecommendFragment extends BaseFragment {
+public class RecommendFragment extends BaseFragment implements IRecommendViewCallback{
     private String RecommendTAG = "RecommendFragment";
     private RecyclerView recommendRecyclerView;
     private View recommentView;
     private RecommendRecycleViewAdapter recommendRecycleViewAdapter;
+    private RecommendPresenter recommendPresenterInstance;
 
     @Override
     protected View onSubViewLoaded(LayoutInflater layoutInflater, ViewGroup container) {
@@ -41,9 +44,11 @@ public class RecommendFragment extends BaseFragment {
         recommentView = layoutInflater.inflate(R.layout.fragment_recommend,container,false);
 //        初始化RecyclerView
         initRecyclerView();
-        //去拿数据回来
-        getRecommendData();
-
+        //获取到逻辑层的接口
+        recommendPresenterInstance = RecommendPresenter.getInstance();
+        //先要设置通知接口的注册
+        recommendPresenterInstance.reqisterViewCallback(this);
+        recommendPresenterInstance.getRecommendList();
         //返回View，给界面实现显示
         return recommentView;
     }
@@ -64,39 +69,34 @@ public class RecommendFragment extends BaseFragment {
         recommendRecyclerView.setAdapter(recommendRecycleViewAdapter);//把创建好的Adapter设置给RecycleView
     }
 
-    /*
-    ** 获取推荐内容
-    ** 这个接口：3.10.6 获取猜你喜欢专辑
+    /**
+     * 当我们成功获取到推荐内容的时候，这个方法就会被调用
+     * 数据回来以后就更新UI
+     * 把数据设置给适配器，并且更新UI
+     * @param result
      */
-    public void getRecommendData() {
-        //封装参数
-        Map<String, String> map = new HashMap<String, String>();
-        //这个参数表示一页数据返回多少条
-        map.put(DTransferConstants.LIKE_COUNT, Constant.RECOMMEND_COUNT + "");
-        CommonRequest.getGuessLikeAlbum(map, new IDataCallBack<GussLikeAlbumList>() {
-            @Override
-            public void onSuccess(@Nullable GussLikeAlbumList gussLikeAlbumList) {
-                //获取数据成功
-                if (gussLikeAlbumList != null) {
-                    List<Album> albumList = gussLikeAlbumList.getAlbumList();
-//                    LogUtil.d(RecommendTAG,"RecommendFragment GussLikeAlbumListSize  ===>"+albumList.size());
-//                  数据拿回来之后更新UI
-                    upRecommendUI(albumList);
-                }
-            }
-
-            @Override
-            public void onError(int i, String s) {
-                //获取数据内容
-                LogUtil.d(RecommendTAG,"RecommendFragment errorCode ===>"+i);
-                LogUtil.d(RecommendTAG,"RecommendFragment errorMsg ===>"+s);
-            }
-        });
-    }
-
-    private void upRecommendUI(List<Album> albumList) {
+    @Override
+    public void onRecommendListLoaded(List<Album> result) {
         //把数据设置给适配器，并且更新UI
-        recommendRecycleViewAdapter.setData(albumList);
+        recommendRecycleViewAdapter.setData(result);
     }
 
+    @Override
+    public void onLoaderMore(List<Album> result) {
+
+    }
+
+    @Override
+    public void onRefreshMore(List<Album> result) {
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        //取消接口的注册
+        if (recommendPresenterInstance != null) {
+            recommendPresenterInstance.unReqisterViewCallback(this);
+        }
+    }
 }
