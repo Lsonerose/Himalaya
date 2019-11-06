@@ -2,6 +2,7 @@ package com.example.rose.himalaya.view;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -13,6 +14,9 @@ import android.widget.FrameLayout;
 
 import com.example.rose.himalaya.R;
 import com.example.rose.himalaya.base.BaseApplication;
+import com.ldoublem.loadingviewlib.view.LVBlock;
+import com.ldoublem.loadingviewlib.view.LVCircularRing;
+import com.ldoublem.loadingviewlib.view.LVGhost;
 
 /**
  * Created by rose on 2019/11/6.
@@ -107,7 +111,13 @@ public abstract class UILoader extends FrameLayout{
 
     //加载中
     public View getLoadingView() {
-        return LayoutInflater.from(getContext()).inflate(R.layout.recommend_loading_layout,this,false);
+        View loadingView = LayoutInflater.from(getContext()).inflate(R.layout.recommend_loading_layout,this,false);
+        LVBlock lvBlock = loadingView.findViewById(R.id.loading_view);
+        lvBlock.setViewColor(getContext().getResources().getColor(R.color.mainTextColor));
+//        lvGhost.setViewColor();
+//        lvGhost.setHandColor(Color.BLACK);
+        lvBlock.startAnim(400);
+        return loadingView;
     }
 
     //网络错误

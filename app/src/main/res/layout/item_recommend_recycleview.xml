@@ -64,8 +64,8 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical">
                 <ImageView
-                    android:layout_width="6dp"
-                    android:layout_height="6dp"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
                     android:src="@drawable/bf"/>
                 <TextView
                     android:id="@+id/recommend_rv_item_album_play_count"
@@ -76,8 +76,8 @@
                     android:textSize="8sp"
                     android:layout_marginLeft="2dp"/>
                 <ImageView
-                    android:layout_width="6dp"
-                    android:layout_height="6dp"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
                     android:src="@drawable/lb"
                     android:layout_marginLeft="30dp"/>
                 <TextView
