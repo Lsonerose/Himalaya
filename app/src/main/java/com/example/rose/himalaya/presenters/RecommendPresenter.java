@@ -25,6 +25,8 @@ public class RecommendPresenter implements IRecommendPresenter {
     private static final String RecommendPresenterTAG = "RecommendPresenter";
 
     private List<IRecommendViewCallback> recommendViewCallbacks = new ArrayList<>();
+    private List<Album> mCurrentRecommend = null;
+    private List<Album> mRecommendList;
 
     private RecommendPresenter(){
     };
@@ -54,6 +56,7 @@ public class RecommendPresenter implements IRecommendPresenter {
     public void getRecommendList() {
         //获取推荐内容
         //封装参数
+        updateLoding();
         Map<String, String> map = new HashMap<String, String>();
         //这个参数表示一页数据返回多少条
         map.put(DTransferConstants.LIKE_COUNT, Constant.RECOMMEND_COUNT + "");
@@ -73,15 +76,37 @@ public class RecommendPresenter implements IRecommendPresenter {
                 //获取数据内容
                 LogUtil.d(RecommendPresenterTAG,"RecommendFragment errorCode ===>"+i);
                 LogUtil.d(RecommendPresenterTAG,"RecommendFragment errorMsg ===>"+s);
+                handlerError();
             }
         });
     }
 
-    private void handlerRecommendResult(List<Album> albums) {
+    private void handlerError() {
         if (recommendViewCallbacks != null) {
             for (IRecommendViewCallback recommendViewCallback : recommendViewCallbacks) {
-                recommendViewCallback.onRecommendListLoaded(albums);
+                recommendViewCallback.onNetworkError();
             }
+        }
+    }
+
+    private void handlerRecommendResult(List<Album> albums) {
+        //通知UI更新
+        if (albums != null) {
+            if (albums.size()==0) {
+                for (IRecommendViewCallback recommendViewCallback : recommendViewCallbacks) {
+                    recommendViewCallback.onEmpty();
+                }
+            }else {
+                for (IRecommendViewCallback recommendViewCallback : recommendViewCallbacks) {
+                    recommendViewCallback.onRecommendListLoaded(albums);
+                }
+            }
+        }
+    }
+
+    public void updateLoding(){
+        for (IRecommendViewCallback recommendViewCallback : recommendViewCallbacks) {
+            recommendViewCallback.onLoading();
         }
     }
 

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.text.TextUtils;
 
 import com.example.rose.himalaya.utils.LogUtil;
@@ -26,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.logging.LogRecord;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -40,6 +42,7 @@ import okhttp3.Response;
  */
 public class BaseApplication extends Application {
     public static final String REFRESH_TOKEN_URL = "https://api.ximalaya.com/oauth2/refresh_token?";
+    private static Handler baseApplicationHandler = null;
 
     @Override
     public void onCreate() {
@@ -62,7 +65,12 @@ public class BaseApplication extends Application {
          * hilsRelease 为true时  禁止打印LOG
          *             为false时 允许打印LOG
          */
-
         LogUtil.init(this.getPackageName(),false);
+
+        baseApplicationHandler = new Handler();
+    }
+
+    public static Handler getHandler(){
+        return baseApplicationHandler;
     }
 }

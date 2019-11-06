@@ -1,5 +1,6 @@
 package com.example.rose.himalaya.fragments;
 
+import android.icu.util.ULocale;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import com.example.rose.himalaya.interfaces.IRecommendViewCallback;
 import com.example.rose.himalaya.presenters.RecommendPresenter;
 import com.example.rose.himalaya.utils.Constant;
 import com.example.rose.himalaya.utils.LogUtil;
+import com.example.rose.himalaya.view.UILoader;
 import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
 import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack;
@@ -32,25 +34,40 @@ import java.util.Map;
  */
 
 public class RecommendFragment extends BaseFragment implements IRecommendViewCallback{
-    private String RecommendTAG = "RecommendFragment";
-    private RecyclerView recommendRecyclerView;
+    private static final String RecommendTAG = "RecommendFragment";
     private View recommentView;
-    private RecommendRecycleViewAdapter recommendRecycleViewAdapter;
+    private RecyclerView recommendRecyclerView;
     private RecommendPresenter recommendPresenterInstance;
+    private UILoader uiLoader;
+    private RecommendRecycleViewAdapter recommendRecycleViewAdapter;
 
-    @Override
-    protected View onSubViewLoaded(LayoutInflater layoutInflater, ViewGroup container) {
+        @Override
+    protected View onSubViewLoaded(final LayoutInflater layoutInflater, ViewGroup container) {
+
+        uiLoader = new UILoader(getContext()) {
+            @Override
+            protected View getSuccessView(ViewGroup c) {
+                return createSuccessView(layoutInflater,c);
+            }
+        };
+
+        recommendPresenterInstance = RecommendPresenter.getInstance(); //获取到逻辑层的接口
+        recommendPresenterInstance.reqisterViewCallback(this); //先要设置通知接口的注册
+        recommendPresenterInstance.getRecommendList();//获取推荐列表
+
+        //解绑父类
+        if (uiLoader.getParent() instanceof ViewGroup) {
+            ((ViewGroup) uiLoader.getParent()).removeView(uiLoader);
+        }
+        //返回View，给界面实现显示
+        return uiLoader;
+    }
+    private View createSuccessView(LayoutInflater layoutInflater, ViewGroup container) {
         //推荐View已加载完成
         recommentView = layoutInflater.inflate(R.layout.fragment_recommend,container,false);
-//        初始化RecyclerView
+        //初始化RecyclerView
         initRecyclerView();
-        //获取到逻辑层的接口
-        recommendPresenterInstance = RecommendPresenter.getInstance();
-        //先要设置通知接口的注册
-        recommendPresenterInstance.reqisterViewCallback(this);
-        recommendPresenterInstance.getRecommendList();
-        //返回View，给界面实现显示
-        return recommentView;
+        return  recommentView;
     }
 
     /**
@@ -60,7 +77,7 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
      *  3.设置适配器
      */
     private void initRecyclerView() {
-        recommendRecyclerView = recommentView.findViewById(R.id.recommend_rv);
+        recommendRecyclerView = recommentView.findViewById(R.id.recommend_rv);//找到控件，并且实例化
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());//设置一个线性布局管理器
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);//设置布局方向
         recommendRecyclerView.setLayoutManager(linearLayoutManager);//把布局管理器给到RecycleView
@@ -77,18 +94,28 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
      */
     @Override
     public void onRecommendListLoaded(List<Album> result) {
+        LogUtil.d(RecommendTAG,"onRecommendListLoaded");
         //把数据设置给适配器，并且更新UI
         recommendRecycleViewAdapter.setData(result);
+        uiLoader.updateStatus(UILoader.UIStatus.SUCCESS);
     }
 
     @Override
-    public void onLoaderMore(List<Album> result) {
-
+    public void onNetworkError() {
+        LogUtil.d(RecommendTAG,"onNetworkError");
+        uiLoader.updateStatus(UILoader.UIStatus.NEWTWORK_ERROR);
     }
 
     @Override
-    public void onRefreshMore(List<Album> result) {
+    public void onEmpty() {
+        LogUtil.d(RecommendTAG,"onEmpty");
+        uiLoader.updateStatus(UILoader.UIStatus.EMPTY);
+    }
 
+    @Override
+    public void onLoading() {
+        LogUtil.d(RecommendTAG,"onLoading");
+        uiLoader.updateStatus(UILoader.UIStatus.LOGIND);
     }
 
     @Override
@@ -99,4 +126,5 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
             recommendPresenterInstance.unReqisterViewCallback(this);
         }
     }
+
 }
