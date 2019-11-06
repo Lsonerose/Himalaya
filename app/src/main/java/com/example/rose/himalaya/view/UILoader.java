@@ -25,6 +25,7 @@ public abstract class UILoader extends FrameLayout{
     private View successView;
     private View networkErrorView;
     private View emptyView;
+    private OnRetryClickListener onRetryClickListener = null;
 
     //枚举  加载中、成功、网络错误、内容为空、无状态
     public enum UIStatus{ LOGIND,SUCCESS,NEWTWORK_ERROR,EMPTY,NONE }
@@ -111,11 +112,31 @@ public abstract class UILoader extends FrameLayout{
 
     //网络错误
     public View getNetworkErrorView() {
-        return LayoutInflater.from(getContext()).inflate(R.layout.recommend_network_error_layout,this,false);
+        View netWorkErrorView = LayoutInflater.from(getContext()).inflate(R.layout.recommend_network_error_layout,this,false);
+
+        //给布局控件设置点击事件、实现点击屏幕重新加载功能
+        netWorkErrorView.findViewById(R.id.recommend_network_error_icon).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //重新获取数据
+                if (onRetryClickListener != null) {
+                    onRetryClickListener.onRetryClick();
+                }
+            }
+        });
+        return netWorkErrorView;
     }
 
     //数据为空
     public View getEmptyView() {
         return LayoutInflater.from(getContext()).inflate(R.layout.recommend_empty_layout,this,false);
+    }
+
+    public void setOnRetryClickListenter(OnRetryClickListener retryClickListenter){
+        this.onRetryClickListener = retryClickListenter;
+    }
+
+    public interface OnRetryClickListener{
+        void onRetryClick();
     }
 }

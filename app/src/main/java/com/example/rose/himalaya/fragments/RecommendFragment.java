@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.rose.himalaya.R;
 import com.example.rose.himalaya.adapters.RecommendRecycleViewAdapter;
@@ -33,7 +34,7 @@ import java.util.Map;
  * 推荐界面
  */
 
-public class RecommendFragment extends BaseFragment implements IRecommendViewCallback{
+public class RecommendFragment extends BaseFragment implements IRecommendViewCallback, UILoader.OnRetryClickListener {
     private static final String RecommendTAG = "RecommendFragment";
     private View recommentView;
     private RecyclerView recommendRecyclerView;
@@ -59,6 +60,8 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
         if (uiLoader.getParent() instanceof ViewGroup) {
             ((ViewGroup) uiLoader.getParent()).removeView(uiLoader);
         }
+
+        uiLoader.setOnRetryClickListenter(this);
         //返回View，给界面实现显示
         return uiLoader;
     }
@@ -127,4 +130,14 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
         }
     }
 
+    @Override
+    public void onRetryClick() {
+        /**
+         * 重新加载推荐内容（用户网络不佳时，点击屏幕重试）
+         * 重新调用接口、获取数据即可
+         */
+        if (recommendPresenterInstance != null) {
+            recommendPresenterInstance.getRecommendList();
+        }
+    }
 }
