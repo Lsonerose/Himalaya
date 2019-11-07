@@ -4,6 +4,13 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     
-    <color name="mainColor">#FA7254</color>
-    <color name="mainTextColor">#e26143</color>
+    <color name="mainColor">#dc8e86</color>
+    <color name="secondaryColor">#474747</color>
+    <color name="thirdColor">#ffffff</color>
+
+    <color name="iconColor">#D58880</color>
+    <color name="mainTextColor">#474747</color>
+
+    <color name="normalCircleColor">#cceaa099</color>
+    <color name="selectCircleColor">#c4665d</color>
 </resources>

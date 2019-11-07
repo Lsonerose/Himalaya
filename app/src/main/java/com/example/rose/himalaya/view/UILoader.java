@@ -113,9 +113,7 @@ public abstract class UILoader extends FrameLayout{
     public View getLoadingView() {
         View loadingView = LayoutInflater.from(getContext()).inflate(R.layout.recommend_loading_layout,this,false);
         LVBlock lvBlock = loadingView.findViewById(R.id.loading_view);
-        lvBlock.setViewColor(getContext().getResources().getColor(R.color.mainTextColor));
-//        lvGhost.setViewColor();
-//        lvGhost.setHandColor(Color.BLACK);
+        lvBlock.setViewColor(getContext().getResources().getColor(R.color.iconColor));
         lvBlock.startAnim(400);
         return loadingView;
     }

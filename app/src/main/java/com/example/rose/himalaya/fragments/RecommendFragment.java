@@ -1,5 +1,6 @@
 package com.example.rose.himalaya.fragments;
 
+import android.content.Intent;
 import android.icu.util.ULocale;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rose.himalaya.R;
+import com.example.rose.himalaya.activity.DetailActivity;
 import com.example.rose.himalaya.adapters.RecommendRecycleViewAdapter;
 import com.example.rose.himalaya.base.BaseFragment;
 import com.example.rose.himalaya.interfaces.IRecommendViewCallback;
@@ -34,7 +36,7 @@ import java.util.Map;
  * 推荐界面
  */
 
-public class RecommendFragment extends BaseFragment implements IRecommendViewCallback, UILoader.OnRetryClickListener {
+public class RecommendFragment extends BaseFragment implements IRecommendViewCallback, UILoader.OnRetryClickListener, RecommendRecycleViewAdapter.OnRecommendItemClickListner {
     private static final String RecommendTAG = "RecommendFragment";
     private View recommentView;
     private RecyclerView recommendRecyclerView;
@@ -86,6 +88,7 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
         recommendRecyclerView.setLayoutManager(linearLayoutManager);//把布局管理器给到RecycleView
 
         recommendRecycleViewAdapter = new RecommendRecycleViewAdapter();//自定义的Adapter
+        recommendRecycleViewAdapter.setOnRecommendItemClickListener(this);
         recommendRecyclerView.setAdapter(recommendRecycleViewAdapter);//把创建好的Adapter设置给RecycleView
     }
 
@@ -139,5 +142,12 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
         if (recommendPresenterInstance != null) {
             recommendPresenterInstance.getRecommendList();
         }
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        //item被点击了，跳转到详情页
+        Intent intent = new Intent(getContext(), DetailActivity.class);
+        startActivity(intent);
     }
 }

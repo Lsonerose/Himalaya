@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.rose.himalaya.R;
+import com.example.rose.himalaya.utils.LogUtil;
 import com.example.rose.himalaya.view.RoundRectImageView;
 import com.ximalaya.ting.android.opensdk.model.album.Album;
 
@@ -26,6 +27,7 @@ import java.util.List;
 public class RecommendRecycleViewAdapter extends RecyclerView.Adapter<RecommendRecycleViewAdapter.InnerHolder> {
     private static final String RecommendRecycleViewAdapterTAG = "RecommendRecycleViewAdapter";
    private List<Album> recommendRecycleViewData = new ArrayList<>();
+    private OnRecommendItemClickListner onRecommendItemClickListner = null;
 
     @Override
     public InnerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -35,11 +37,19 @@ public class RecommendRecycleViewAdapter extends RecyclerView.Adapter<RecommendR
     }
 
     @Override
-    public void onBindViewHolder(InnerHolder holder, int position) {
+    public void onBindViewHolder(InnerHolder holder, final int position) {
         //这里是设置数据
         holder.itemView.setTag(position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onRecommendItemClickListner != null) {
+                    onRecommendItemClickListner.onItemClick((Integer) view.getTag());
+                }
+                LogUtil.d(RecommendRecycleViewAdapterTAG,"holder.itemView.position ----> "+ view.getTag());
+            }
+        });
         holder.setData(recommendRecycleViewData.get(position));
-
     }
 
     @Override
@@ -87,6 +97,16 @@ public class RecommendRecycleViewAdapter extends RecyclerView.Adapter<RecommendR
             recommendRvItemAlbumPlayCount.setText(data.getPlayCount()+"");
             recommendRvItemAlbumContentSize.setText(data.getIncludeTrackCount()+"");
         }
+    }
+
+
+    //设置子项item点击接口
+    public void setOnRecommendItemClickListener(OnRecommendItemClickListner listener){
+        onRecommendItemClickListner = listener;
+    }
+
+    public interface OnRecommendItemClickListner{
+        void onItemClick(int position);
     }
 
 }

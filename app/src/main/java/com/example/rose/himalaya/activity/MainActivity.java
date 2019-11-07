@@ -1,5 +1,6 @@
-package com.example.rose.himalaya;
+package com.example.rose.himalaya.activity;
 
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -7,8 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.rose.himalaya.R;
 import com.example.rose.himalaya.adapters.IndicatorAdapter;
 import com.example.rose.himalaya.adapters.MainViewPagerAdapter;
+import com.example.rose.himalaya.base.BaseActivity;
 import com.example.rose.himalaya.utils.LogUtil;
 import com.gyf.immersionbar.ImmersionBar;
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
@@ -27,7 +30,7 @@ import java.util.Map;
 /*
 **  程序主入口、主界面
  */
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends BaseActivity {
 
     private static final String TAG = "MainActivity";
     private MagicIndicator magicIndicator;
