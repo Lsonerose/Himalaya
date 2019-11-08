@@ -1,14 +1,9 @@
 package com.example.rose.himalaya.adapters;
 
-import android.annotation.SuppressLint;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -44,7 +39,8 @@ public class RecommendRecycleViewAdapter extends RecyclerView.Adapter<RecommendR
             @Override
             public void onClick(View view) {
                 if (onRecommendItemClickListner != null) {
-                    onRecommendItemClickListner.onItemClick((Integer) view.getTag());
+                    int clickPosition =(int) view.getTag();
+                    onRecommendItemClickListner.onItemClick(clickPosition,recommendRecycleViewData.get(clickPosition));
                 }
                 LogUtil.d(RecommendRecycleViewAdapterTAG,"holder.itemView.position ----> "+ view.getTag());
             }
@@ -106,7 +102,7 @@ public class RecommendRecycleViewAdapter extends RecyclerView.Adapter<RecommendR
     }
 
     public interface OnRecommendItemClickListner{
-        void onItemClick(int position);
+        void onItemClick(int position, Album album);
     }
 
 }

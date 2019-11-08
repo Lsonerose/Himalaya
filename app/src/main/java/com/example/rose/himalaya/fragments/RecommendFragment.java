@@ -1,35 +1,24 @@
 package com.example.rose.himalaya.fragments;
 
 import android.content.Intent;
-import android.icu.util.ULocale;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.rose.himalaya.R;
 import com.example.rose.himalaya.activity.DetailActivity;
 import com.example.rose.himalaya.adapters.RecommendRecycleViewAdapter;
 import com.example.rose.himalaya.base.BaseFragment;
 import com.example.rose.himalaya.interfaces.IRecommendViewCallback;
+import com.example.rose.himalaya.presenters.AlbumDetailPresenter;
 import com.example.rose.himalaya.presenters.RecommendPresenter;
-import com.example.rose.himalaya.utils.Constant;
 import com.example.rose.himalaya.utils.LogUtil;
 import com.example.rose.himalaya.view.UILoader;
-import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
-import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
-import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack;
 import com.ximalaya.ting.android.opensdk.model.album.Album;
-import com.ximalaya.ting.android.opensdk.model.album.GussLikeAlbumList;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by rose on 2019/11/2.
@@ -145,8 +134,10 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
     }
 
     @Override
-    public void onItemClick(int position) {
+    public void onItemClick(int position, Album album) {
+        AlbumDetailPresenter.getsIntance().setTargetAlbum(album);
         //item被点击了，跳转到详情页
+        //根据位置拿到数据
         Intent intent = new Intent(getContext(), DetailActivity.class);
         startActivity(intent);
     }
