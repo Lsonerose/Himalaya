@@ -9,4 +9,7 @@ public class Constant {
 
     //获取推荐列表专辑的数量
     public static int RECOMMEND_COUNT = 50;
+
+    //默认详情列表请求的数量
+    public static int COUNT_DETAIL = 30;
 }

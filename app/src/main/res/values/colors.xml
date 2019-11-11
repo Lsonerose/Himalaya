@@ -13,4 +13,11 @@
 
     <color name="normalCircleColor">#cceaa099</color>
     <color name="selectCircleColor">#c4665d</color>
+
+    <color name="detailColor">#8f8f8f</color>
+    <color name="detailItemMarginColor">#d4d4d4</color>
+    <color name="detailTvOne">#B02A2A</color>
+    <color name="detailTvTwo">#AD4517</color>
+    <color name="detailTvThree">#BDAE47</color>
+    <color name="detailTvOthre">#7c7c7c</color>
 </resources>

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.example.rose.himalaya.R;
 import com.example.rose.himalaya.activity.DetailActivity;
+import com.example.rose.himalaya.adapters.DetailRecyclerViewAdapter;
 import com.example.rose.himalaya.adapters.RecommendRecycleViewAdapter;
 import com.example.rose.himalaya.base.BaseFragment;
 import com.example.rose.himalaya.interfaces.IRecommendViewCallback;
@@ -33,7 +34,7 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
     private UILoader uiLoader;
     private RecommendRecycleViewAdapter recommendRecycleViewAdapter;
 
-        @Override
+    @Override
     protected View onSubViewLoaded(final LayoutInflater layoutInflater, ViewGroup container) {
 
         uiLoader = new UILoader(getContext()) {
