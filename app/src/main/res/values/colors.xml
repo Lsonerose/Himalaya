@@ -20,4 +20,6 @@
     <color name="detailTvTwo">#AD4517</color>
     <color name="detailTvThree">#BDAE47</color>
     <color name="detailTvOthre">#7c7c7c</color>
+
+    <color name="playerMainColor">#EFF1F2</color>
 </resources>

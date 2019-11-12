@@ -11,5 +11,5 @@ public class Constant {
     public static int RECOMMEND_COUNT = 50;
 
     //默认详情列表请求的数量
-    public static int COUNT_DETAIL = 30;
+    public static int COUNT_DETAIL = 15;
 }

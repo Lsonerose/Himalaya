@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 
 import com.example.rose.himalaya.R;
 import com.example.rose.himalaya.base.BaseApplication;
+import com.example.rose.himalaya.utils.LogUtil;
 import com.ldoublem.loadingviewlib.view.LVBlock;
 import com.ldoublem.loadingviewlib.view.LVCircularRing;
 import com.ldoublem.loadingviewlib.view.LVGhost;
@@ -30,9 +31,10 @@ public abstract class UILoader extends FrameLayout{
     private View networkErrorView;
     private View emptyView;
     private OnRetryClickListener onRetryClickListener = null;
+    private String UILoaderTAG = "UILoader";
 
     //枚举  加载中、成功、网络错误、内容为空、无状态
-    public enum UIStatus{ LOGIND,SUCCESS,NEWTWORK_ERROR,EMPTY,NONE }
+    public enum UIStatus{ LOADING,SUCCESS,NEWTWORK_ERROR,EMPTY,NONE }
 
     //当前状态（默认为无状态）
     public UIStatus currentStatus = UIStatus.NONE;
@@ -79,7 +81,7 @@ public abstract class UILoader extends FrameLayout{
             addView(loadingView);
         }
         //根据状态设置是否可见(当前状态是否是加载中？是：显示  否：隐藏)
-        loadingView.setVisibility(currentStatus == UIStatus.LOGIND ? VISIBLE : GONE);
+        loadingView.setVisibility(currentStatus == UIStatus.LOADING ? VISIBLE : GONE);
 
         //成功
         if (successView == null) {
@@ -128,6 +130,7 @@ public abstract class UILoader extends FrameLayout{
             public void onClick(View view) {
                 //重新获取数据
                 if (onRetryClickListener != null) {
+                    LogUtil.d(UILoaderTAG,"被点击了");
                     onRetryClickListener.onRetryClick();
                 }
             }

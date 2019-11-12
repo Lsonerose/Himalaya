@@ -25,7 +25,7 @@
             android:text="♪ 订阅"
             android:background="@drawable/shape_subscription_bg"
             android:gravity="center"
-            android:textColor="#fff"/>
+            android:textColor="@color/selectCircleColor"/>
     </RelativeLayout>
     <android.support.constraint.ConstraintLayout
         android:id="@+id/detail_cl"
@@ -68,13 +68,13 @@
                 android:textSize="14sp"
                 android:layout_marginRight="3dp"/>
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginTop="2dp"
-                android:src="@drawable/men"/>
+                android:src="@drawable/menu_detail"/>
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>
     <com.example.rose.himalaya.view.RoundRectImageView
@@ -114,10 +114,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/detail_cl"
-        android:background="#000fff"/>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/detail_rv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/detail_cl"/>
+        android:background="#EBE8E8"/>
 </RelativeLayout>

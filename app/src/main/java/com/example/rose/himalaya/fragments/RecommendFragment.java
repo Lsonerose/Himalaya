@@ -111,7 +111,7 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
     @Override
     public void onLoading() {
         LogUtil.d(RecommendTAG,"onLoading");
-        uiLoader.updateStatus(UILoader.UIStatus.LOGIND);
+        uiLoader.updateStatus(UILoader.UIStatus.LOADING);
     }
 
     @Override

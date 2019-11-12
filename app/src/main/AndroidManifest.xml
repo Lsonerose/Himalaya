@@ -38,6 +38,8 @@
         <activity android:name=".activity.MainActivity"/>
         <!--引导页-->
         <activity android:name=".activity.GuideActivity"/>
+        <!--播放器界面-->
+        <activity android:name=".activity.PlayerActivity"/>
         <meta-data
             android:name="android.max_aspect"
             android:value="2.4" />

@@ -28,6 +28,7 @@ public class DetailRecyclerViewAdapter extends RecyclerView.Adapter<DetailRecycl
     private List<Track> detailData = new ArrayList<>();
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");//格式化日期
     private SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat("mm:ss");//格式化时间
+    private ItemClickListener mItemClickListener = null;
 
     public void setData(List<Track> data) {
         //清除原来的数据
@@ -82,11 +83,31 @@ public class DetailRecyclerViewAdapter extends RecyclerView.Adapter<DetailRecycl
         detailPlayCount.setText(track.getPlayCount()+"");//播放次数
         detailItemDuration.setText(simpleDateTimeFormat.format( track.getDuration()*1000));//时长
         detailItemUpdateTime.setText(simpleDateFormat.format(track.getUpdatedAt()));//更新时间
+
+        //给Item设置点击事件
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO:
+               // Toast.makeText(view.getContext(),"点击了",Toast.LENGTH_SHORT).show();
+                if (mItemClickListener != null) {
+                    mItemClickListener.onItemClick();
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return detailData.size();
+    }
+
+    public void setItemClickListener(ItemClickListener listener){
+        this.mItemClickListener = listener;
+    }
+
+    public interface ItemClickListener{
+        void onItemClick();
     }
 
 }
