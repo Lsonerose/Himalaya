@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 
 import com.example.rose.himalaya.utils.LogUtil;
@@ -14,6 +15,7 @@ import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
 import com.ximalaya.ting.android.opensdk.datatrasfer.AccessTokenManager;
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
 import com.ximalaya.ting.android.opensdk.httputil.XimalayaException;
+import com.ximalaya.ting.android.opensdk.player.XmPlayerManager;
 import com.ximalaya.ting.android.opensdk.player.appnotification.XmNotificationCreater;
 import com.ximalaya.ting.android.opensdk.util.BaseUtil;
 import com.ximalaya.ting.android.opensdk.util.Logger;
@@ -41,8 +43,8 @@ import okhttp3.Response;
  * Created by le.xin on 2016/6/12.
  */
 public class BaseApplication extends Application {
-    public static final String REFRESH_TOKEN_URL = "https://api.ximalaya.com/oauth2/refresh_token?";
     private static Handler baseApplicationHandler = null;
+    private static Context context = null;
 
     @Override
     public void onCreate() {
@@ -60,6 +62,9 @@ public class BaseApplication extends Application {
             mXimalaya.init(this ,mAppSecret);
         }
 
+        //初始化播放器
+        XmPlayerManager.getInstance(this).init();
+
         /**
          * 初始化LogUtil
          * hilsRelease 为true时  禁止打印LOG
@@ -68,9 +73,15 @@ public class BaseApplication extends Application {
         LogUtil.init(this.getPackageName(),false);
 
         baseApplicationHandler = new Handler();
+
+        context = getBaseContext();
     }
 
     public static Handler getHandler(){
         return baseApplicationHandler;
+    }
+
+    public static Context getAppContext(){
+        return context;
     }
 }

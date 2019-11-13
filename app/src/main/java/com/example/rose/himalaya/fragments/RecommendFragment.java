@@ -45,7 +45,7 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
         };
 
         recommendPresenterInstance = RecommendPresenter.getInstance(); //获取到逻辑层的接口
-        recommendPresenterInstance.reqisterViewCallback(this); //先要设置通知接口的注册
+        recommendPresenterInstance.registerViewCallback(this);//先要设置通知接口的注册
         recommendPresenterInstance.getRecommendList();//获取推荐列表
 
         //解绑父类
@@ -119,7 +119,7 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
         super.onDestroyView();
         //取消接口的注册
         if (recommendPresenterInstance != null) {
-            recommendPresenterInstance.unReqisterViewCallback(this);
+            recommendPresenterInstance.unRegisterViewCallback(this);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.example.rose.himalaya.interfaces;
 
+import com.example.rose.himalaya.base.IBasePresenter;
 import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack;
 import com.ximalaya.ting.android.opensdk.model.album.GussLikeAlbumList;
 
@@ -7,7 +8,7 @@ import com.ximalaya.ting.android.opensdk.model.album.GussLikeAlbumList;
  * Created by rose on 2019/11/5.
  */
 
-public interface IRecommendPresenter {
+public interface IRecommendPresenter extends IBasePresenter<IRecommendViewCallback>{
 
     //获取推荐内容
     void getRecommendList();
@@ -17,16 +18,4 @@ public interface IRecommendPresenter {
 
     //上拉加载
     void loadMore();
-
-    /**
-     * 这个方法用于注册的回调
-     * @param iRecommendViewCallback
-     */
-    void reqisterViewCallback(IRecommendViewCallback iRecommendViewCallback);
-
-    /**
-     * 取消UI的回调注册
-     * @param iRecommendViewCallback
-     */
-    void unReqisterViewCallback(IRecommendViewCallback iRecommendViewCallback);
 }

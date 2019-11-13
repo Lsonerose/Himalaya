@@ -22,4 +22,7 @@
     <color name="detailTvOthre">#7c7c7c</color>
 
     <color name="playerMainColor">#EFF1F2</color>
+    <color name="playerMainColorFu">#c3eff1f2</color>
+    <color name="playerSecondaryColor">#28000000</color>
+    <color name="playerSeekBarBgColor">#df8278</color>
 </resources>

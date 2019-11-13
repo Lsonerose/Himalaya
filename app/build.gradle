@@ -26,6 +26,8 @@ android {
 }
 
 dependencies {
+    //阴影
+    compile 'com.github.dmytrodanylyk.shadow-layout:library:1.0.3'
 
     //LoadingView
     implementation 'com.ldoublem.loadingview:loadingviewlib:1.0'

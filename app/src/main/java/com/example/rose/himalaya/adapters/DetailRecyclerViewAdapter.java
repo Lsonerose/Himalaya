@@ -1,19 +1,12 @@
 package com.example.rose.himalaya.adapters;
 
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.Resource;
 import com.example.rose.himalaya.R;
-import com.example.rose.himalaya.utils.LogUtil;
 import com.ximalaya.ting.android.opensdk.model.track.Track;
 
 import java.text.SimpleDateFormat;
@@ -52,7 +45,7 @@ public class DetailRecyclerViewAdapter extends RecyclerView.Adapter<DetailRecycl
     }
 
     @Override
-    public void onBindViewHolder(DetailRecyclerViewAdapter.innerHolder holder, int position) {
+    public void onBindViewHolder(DetailRecyclerViewAdapter.innerHolder holder, final int position) {
         //找到控件
         TextView orderText = holder.itemView.findViewById(R.id.order_text);//顺序ID
         TextView detailItemTitle = holder.itemView.findViewById(R.id.detail_item_title);//标题
@@ -91,7 +84,8 @@ public class DetailRecyclerViewAdapter extends RecyclerView.Adapter<DetailRecycl
                 //TODO:
                // Toast.makeText(view.getContext(),"点击了",Toast.LENGTH_SHORT).show();
                 if (mItemClickListener != null) {
-                    mItemClickListener.onItemClick();
+                    //参数需要有列表和位置
+                    mItemClickListener.onItemClick(detailData,position);
                 }
             }
         });
@@ -107,7 +101,7 @@ public class DetailRecyclerViewAdapter extends RecyclerView.Adapter<DetailRecycl
     }
 
     public interface ItemClickListener{
-        void onItemClick();
+        void onItemClick(List<Track> detailData, int position);
     }
 
 }

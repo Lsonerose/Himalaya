@@ -1,7 +1,5 @@
 package com.example.rose.himalaya.activity;
 
-import android.animation.Animator;
-import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -13,11 +11,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -26,6 +22,7 @@ import com.example.rose.himalaya.adapters.DetailRecyclerViewAdapter;
 import com.example.rose.himalaya.base.BaseActivity;
 import com.example.rose.himalaya.interfaces.IAlbumDetailViewCallback;
 import com.example.rose.himalaya.presenters.AlbumDetailPresenter;
+import com.example.rose.himalaya.presenters.PlayerPresenter;
 import com.example.rose.himalaya.utils.FastBlurUtil;
 import com.example.rose.himalaya.utils.LogUtil;
 import com.example.rose.himalaya.view.RoundRectImageView;
@@ -181,8 +178,11 @@ public class DetailActivity extends BaseActivity implements IAlbumDetailViewCall
     }
 
     @Override
-    public void onItemClick() {
-        //TODO:跳转到播放器界面
+    public void onItemClick(List<Track> detailData, int position) {
+        //设置播放数据
+        PlayerPresenter playerPresenter = PlayerPresenter.getPlayerPresenter();
+         playerPresenter.setPlayList(detailData,position);
+        //跳转到播放器界面
         Intent intent = new Intent(this,PlayerActivity.class);
         startActivity(intent);
     }
